@@ -46,9 +46,6 @@ df = load_df(URL)
 
 
 
-schedule.every(10).seconds.do(query_data_and_send_emails(df))
+query_data_and_send_emails(df)
 
 
-while 1:
-    schedule.run_pending()
-    time.sleep(1)

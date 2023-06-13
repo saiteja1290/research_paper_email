@@ -7,16 +7,15 @@ from email.utils import formataddr
 from pathlib import Path
 
 
-
-
-
 from dotenv import load_dotenv  # pip install python-dotenv
 
-PORT = 587  
-EMAIL_SERVER = "smtp-mail.outlook.com"  # Adjust server address, if you are not using @outlook
+PORT = 587
+# Adjust server address, if you are not using @outlook
+EMAIL_SERVER = "smtp-mail.outlook.com"
 
 # Load the environment variables
-current_dir = Path(__file__).resolve().parent if "__file__" in locals() else Path.cwd()
+current_dir = Path(__file__).resolve(
+).parent if "__file__" in locals() else Path.cwd()
 envars = current_dir / ".env"
 load_dotenv(envars)
 
@@ -69,17 +68,11 @@ def send_email(subject, receiver_email, name, due_date, invoice_no, amount):
 
 
 if __name__ == "__main__":
-   schedule.every(10).seconds.do(send_email(
+    send_email(
         subject="Invoice Reminder",
         name="John Doe",
-        receiver_email="ravinuthalabhishek2003@gmail.com",
+        receiver_email="saitejapalegarthuli4@gmail.com",
         due_date="11, Aug 2022",
         invoice_no="INV-21-12-009",
         amount="5",
-    ))
-   while 1:
-    schedule.run_pending()
-    time.sleep(1)
-   
-   
-    
+    )

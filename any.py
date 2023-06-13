@@ -3,12 +3,76 @@ import requests
 import re
 import random
 from openpyxl import load_workbook
+import os
+import schedule
+import time
+import smtplib
+from email.message import EmailMessage
+from email.utils import formataddr
+from pathlib import Path
+from dotenv import load_dotenv
+
+# -----------------------------------------------------
+PORT = 587
+
+EMAIL_SERVER = "smtp-mail.outlook.com"
+
+current_dir = Path(__file__).resolve(
+).parent if "__file__" in locals() else Path.cwd()
+envars = current_dir / ".env"
+load_dotenv(envars)
+
+# Read environment variables
+sender_email = os.getenv("EMAIL")
+password_email = os.getenv("PASSWORD")
+# ------------------------------------------------------
+def send_email(subject, receiver_email, name, datas):
+    # Create the base text message.
+    msg = EmailMessage()
+    msg["Subject"] = subject
+    msg["From"] = formataddr(("Coding Is Fun Corp.", f"{sender_email}"))
+    msg["To"] = receiver_email
+    msg["BCC"] = sender_email
+    messageraedi = f"""\
+        Hi {name},
+        Here is your weekly Research paper recommendations based on your interests -
+        {data}
+        Best regards,
+        Organization Tenet
+        """
+    msg.set_content(
+        messageraedi
+    )
+    # Add the html version.  This converts the message into a multipart/alternative
+    # container, with the original text message as the first part and the new html
+    # message as the second part.
+    msg.add_alternative(
+        f"""\
+    <html>
+      <body>
+        <p>{messageraedi}</p>
+      </body>
+    </html>
+    """,
+        subtype="html",
+    )
+
+    with smtplib.SMTP(EMAIL_SERVER, PORT) as server:
+        server.starttls()
+        server.login(sender_email, password_email)
+        server.sendmail(sender_email, receiver_email, msg.as_string())
+
+
+def read_text_file(file_path):
+    with open(file_path, 'r') as file:
+        text = file.read()
+    return text
 def clean_sentence(sentence):
     # Remove all non-alphabetic, non-numeric, and non-space characters
     cleaned_sentence = re.sub(r'[^a-zA-Z0-9 ]', '', sentence)
 
     return cleaned_sentence
-def link_to_pdfs_and_titles(domain, subdomain, name, page = random.randint(1,500)):
+def link_to_pdfs_and_titles(domain, subdomain, name, page = 1):
     domain = domain.replace(" ", "+")
     subdomain = subdomain.replace(" ", "+")
     titles = []
@@ -75,5 +139,13 @@ for i in range(get_number_of_rows(excel_file, sheet_name)-1):
     domain = row_data[1]
     subdomain = row_data[3]
     name = row_data[0]
+    email = row_data[2]
     row += 1
     link_to_pdfs_and_titles(domain, subdomain, name)
+    data = read_text_file(f'text_files/{name}.txt')
+    send_email(
+        subject="Your Weekly Research Paper recommendation",
+        name=f"{name}",
+        receiver_email=f"{email}",
+        datas= data,
+    )
