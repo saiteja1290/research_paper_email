@@ -53,14 +53,18 @@ def save_to_excel(name, interests, email, subdomain):
         ws['A1'] = 'Name'
         ws['B1'] = 'Interests'
         ws['C1'] = 'Email'
-        ws['D1'] = 'subdomain'
+        ws['D1'] = 'Subdomain'
     
     ws.append([name, interests, email, subdomain])
     
     wb.save(excel_file)
+
+
 @app.route("/")
 def index():
     return render_template('index.html')
+
+
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
@@ -69,13 +73,8 @@ def register():
         email = request.form['email']
         subdomain = request.form['subdomain']
 
-        # Check if any field is empty
         if not name or not interests or not email or not subdomain:
             return '<h2 style="text-align:center">Please fill in all fields.</h2>'
-
-        # Check if the email is in the proper format
-        if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
-            return '<h2 style="text-align:center">Invalid email format.</h2>'
 
         save_to_excel(name, interests, email, subdomain)
 
