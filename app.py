@@ -24,7 +24,7 @@ def link_to_pdfs_and_titles(domain, subdomain, page = random.randint(1,500)):
 
 
     target_links = soup.find_all("a", class_="webtrekk-track pdf-link")
-    target_links_title = soup.find_all("a", class_="title")
+    # target_links_title = soup.find_all("a", class_="title")
     for link in target_links:
         if(link.get("doi")):    
             # titles = link.text
@@ -39,7 +39,7 @@ def link_to_pdfs_and_titles(domain, subdomain, page = random.randint(1,500)):
         # title = modified_text
         titles2.append(modified_text)
     print(titles2)
-def save_to_excel(name, interests):
+def save_to_excel(name, interests, email, subdomain):
     excel_file = 'registrations.xlsx'
     
     try:
@@ -52,8 +52,10 @@ def save_to_excel(name, interests):
         ws = wb.active
         ws['A1'] = 'Name'
         ws['B1'] = 'Interests'
+        ws['C1'] = 'Email'
+        ws['D1'] = 'subdomain'
     
-    ws.append([name, interests])
+    ws.append([name, interests, email, subdomain])
     
     wb.save(excel_file)
 @app.route("/")
@@ -64,13 +66,24 @@ def register():
     if request.method == 'POST':
         name = request.form['name']
         interests = request.form['interests']
+        email = request.form['email']
+        subdomain = request.form['subdomain']
 
-        save_to_excel(name, interests)
+        # Check if any field is empty
+        if not name or not interests or not email or not subdomain:
+            return '<h2 style="text-align:center">Please fill in all fields.</h2>'
 
-        return '<h2 style = "text-align = center">Registration successful!</h2>'
+        # Check if the email is in the proper format
+        if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
+            return '<h2 style="text-align:center">Invalid email format.</h2>'
+
+        save_to_excel(name, interests, email, subdomain)
+
+        return '<h2 style="text-align:center">Registration successful!</h2>'
 
     else:
         return render_template('register.html')
+
 
 if __name__ == '__main__':
     app.run(debug=True)
