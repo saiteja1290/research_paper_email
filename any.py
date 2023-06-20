@@ -6,6 +6,7 @@ from openpyxl import load_workbook
 import os
 import schedule
 import time
+import openai
 import smtplib
 from email.message import EmailMessage
 from email.utils import formataddr
@@ -13,6 +14,8 @@ from pathlib import Path
 from dotenv import load_dotenv
 
 # -----------------------------------------------------
+openai.api_key = "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"
+
 PORT = 587
 
 EMAIL_SERVER = "smtp-mail.outlook.com"
@@ -30,18 +33,22 @@ def send_email(subject, receiver_email, name, datas):
     # Create the base text message.
     msg = EmailMessage()
     msg["Subject"] = subject
-    msg["From"] = formataddr(("Coding Is Fun Corp.", f"{sender_email}"))
+    msg["From"] = formataddr(("Tenet - Stay Informed, Stay Ahead", f"{sender_email}"))
     msg["To"] = receiver_email
     msg["BCC"] = sender_email
     messageraedi = f"""\
-        Hi {name},
-        Here is your weekly Research paper recommendations based on your interests -
-        {data}
+        <h3>Hi {name},</h3>
+        <br>
+        <h4>Here is your weekly Research paper recommendations based on your interests -<h4>
+        {datas}
+        <br>
+        <br>
         Best regards,
+        <br>
         Organization Tenet
         """
     msg.set_content(
-        messageraedi
+        messageraedi, subtype = "html",
     )
     # Add the html version.  This converts the message into a multipart/alternative
     # container, with the original text message as the first part and the new html
@@ -72,12 +79,13 @@ def clean_sentence(sentence):
     cleaned_sentence = re.sub(r'[^a-zA-Z0-9 ]', '', sentence)
 
     return cleaned_sentence
-def link_to_pdfs_and_titles(domain, subdomain, name, page = 1):
+def link_to_pdfs_and_titles(domain, subdomain, name, page = random.randint(1,30)):
     domain = domain.replace(" ", "+")
     subdomain = subdomain.replace(" ", "+")
     titles = []
     titles2 = []
     pdf_links = []
+    abouts = []
     url = f"https://link.springer.com/search/page/{page}?facet-discipline=%22{domain}%22&facet-sub-discipline=%22{subdomain}%22&showAll=false"
 
     response = requests.get(url)
@@ -102,12 +110,15 @@ def link_to_pdfs_and_titles(domain, subdomain, name, page = 1):
         titles2.append(modified_text)
     # print(titles2)
 
-    file_path = f"text_files/{name}.txt"  # Replace with the desired file path
+    for title in titles2:
+        prompt = title+",give an about in 20-30 words"
+        response = openai.Completion.create(engine = "text-davinci-003", prompt= prompt, max_tokens = 600)
+        abouts.append(response.choices[0].text.strip())
+    st = ""
+    for i in range(len(min(titles, titles2))):
 
-    # Open the file in write mode
-    with open(file_path, "w") as file:
-        for i in range(min(len(titles2), len(pdf_links))):
-            file.write(clean_sentence(titles2[i].replace('\xa0', '')) + ": "+ pdf_links[i]+"\n\n")
+        st = st+"<h4>" + clean_sentence(titles2[i].replace('\xa0', '')) + ": "+ pdf_links[i]+"<br><strong>About: <strong>"+f"{abouts[i]}"+"</h4>"+"<br><br>"
+    return st
 
 
 
@@ -141,8 +152,9 @@ for i in range(get_number_of_rows(excel_file, sheet_name)-1):
     name = row_data[0]
     email = row_data[2]
     row += 1
-    link_to_pdfs_and_titles(domain, subdomain, name)
-    data = read_text_file(f'text_files/{name}.txt')
+    data = link_to_pdfs_and_titles(domain, subdomain, name)
+    # print(data)
+    # data = read_text_file(f'text_files/{name}.txt')
     send_email(
         subject="Your Weekly Research Paper recommendation",
         name=f"{name}",
