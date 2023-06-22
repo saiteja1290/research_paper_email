@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, url_for
 from openpyxl import Workbook
 from openpyxl import load_workbook
 from bs4 import BeautifulSoup
@@ -6,7 +6,7 @@ import requests
 import re
 import random
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='static')
 
 # This function saves the data in excel sheet
 def save_to_excel(name, interests, email, subdomain):
