@@ -14,7 +14,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 
 # -----------------------------------------------------
-openai.api_key = "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"
+openai.api_key = ""
 
 PORT = 587
 
@@ -110,14 +110,17 @@ def link_to_pdfs_and_titles(domain, subdomain, name, page = random.randint(1,30)
         titles2.append(modified_text)
     # print(titles2)
 
-    for title in titles2:
-        prompt = title+",give an about in 20-30 words"
-        response = openai.Completion.create(engine = "text-davinci-003", prompt= prompt, max_tokens = 600)
-        abouts.append(response.choices[0].text.strip())
+
+    # To integrate ChatGPT
+    # for title in titles2:
+    #     prompt = title+",give an about in 20-30 words"
+    #     response = openai.Completion.create(engine = "text-davinci-003", prompt= prompt, max_tokens = 600)
+    #     abouts.append(response.choices[0].text.strip())
     st = ""
     for i in range(len(min(titles, titles2))):
 
-        st = st+"<h4>" + clean_sentence(titles2[i].replace('\xa0', '')) + ": "+ pdf_links[i]+"<br><strong>About: <strong>"+f"{abouts[i]}"+"</h4>"+"<br><br>"
+        st = st+"<h4>" + clean_sentence(titles2[i].replace('\xa0', '')) + ": "+ pdf_links[i]+"</h4>"+"<br><br>"
+        # "<br><strong>About: <strong>"+f"{abouts[i]}"+
     return st
 
 
