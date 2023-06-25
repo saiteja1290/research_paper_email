@@ -145,7 +145,7 @@ def get_row_data(excel_file, sheet_name, row):
 excel_file = 'registrations.xlsx'
 sheet_name = 'Sheet'
 row = 2
-def mainmain():
+def mainmain(row):
     for i in range(get_number_of_rows(excel_file, sheet_name)-1):
 
         row_data = get_row_data(excel_file, sheet_name, row)
@@ -166,7 +166,7 @@ def mainmain():
 # Example usage
 
 week_seconds = 604800
-mainmain()
+mainmain(2)
 
 # Uncomment this code and comment mainmain() in line 169 to send mails every week
 # while True:
