@@ -1,23 +1,594 @@
 <!DOCTYPE html>
-<html>
+<!-- Created By CodingLab - www.codinglabweb.com -->
+<html lang="en" dir="ltr">
+
 <head>
-    <title>Registration Form</title>
+    <meta charset="UTF-8">
+    <title> Responsive Registration Form | CodingLab </title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/register.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        *{
+            text-align: center;
+        }
+        .content {
+            display: none;
+        }
+    </style>
+    <script>
+        var subjectObject = {
+            "Biomedicine": ['Biomedicine',
+                'Neurosciences',
+                'Pharmacology/Toxicology',
+                'Molecular Medicine',
+                'Biomedicine, general',
+                'Cell Biology'],
+
+            'Business and Management': [
+                "Business and Management, general",
+                "Management",
+                "Business Strategy/Leadership",
+                "Operations Research/Decision Theory",
+                "Marketing"],
+
+            'Chemistry': [
+                "Physical Chemistry",
+                "Analytical Chemistry",
+                "Food Science",
+                "Inorganic Chemistry",
+                "Organic Chemistry"],
+
+            'Computer Science': [
+                "Artificial Intelligence",
+                "Computer Communication Networks",
+                "Information Systems Applications (incl. Internet)",
+                "Information Storage and Retrieval",
+                "Algorithm Analysis and Problem Complexity"],
+
+            'Earth Sciences': [
+                "Geology",
+                "Geotechnical Engineering & Applied Earth Sciences",
+                "Hydrogeology",
+                "Geoengineering, Foundations, Hydraulics",
+                "Soil Science & Conservation"],
+            'Economics': [
+                "Education & Language",
+                "Engineering",
+                "Business & Management",
+                "Medicine",
+                "Economic Policy",
+                "Economic Theory/Quantitative Economics/Mathematical Methods",
+                "Economics, general",
+                "Public Economics",
+                "Macroeconomics/Monetary Economics//Financial Economics"],
+
+            'Education': [
+                "Education, general",
+                "Educational Policy and Politics",
+                "Higher Education",
+                "International and Comparative Education",
+                "Sociology of Education"]
+            ,
+            'Engineering': [
+                "Physics",
+                "Environment",
+                "Earth Sciences and Geography",
+                "Chemistry",
+                "Computational Intelligence",
+                "Artificial Intelligence",
+                "Engineering, general",
+                "Mechanical Engineering",
+                "Communications Engineering, Networks"],
+
+            'Environment': [
+                "Earth Sciences and Geography",
+                "Engineering",
+                "Energy",
+                "Public Health",
+                "Environment, general",
+                "Ecotoxicology",
+                "Atmospheric Protection/Air Quality Control/Air Pollution",
+                "Environmental Health",
+                "Waste Water Technology / Water Pollution Control / Water Management / Aquatic Pollution"],
+
+            'Geography': [
+                "Landscape/Regional and Urban Planning",
+                "Nature Conservation",
+                "Landscape Architecture",
+                "Civil Engineering",
+                "Geographical Information Systems/Cartography"],
+
+            'History': [
+                "History, general",
+                "Modern History",
+                "Social History",
+                "Archaeology",
+                "Cultural History"],
+
+            'Law': [
+                "Private International Law, International &amp; Foreign Law, Comparative Law ",
+                "Civil Law",
+                "Medical Law",
+                "Theories of Law, Philosophy of Law, Legal History",
+                "Commercial Law"],
+
+            'Life Sciences': [
+                "Biomedical Sciences",
+                "Medicine",
+                "Chemistry",
+                "Astronomy",
+                "Plant Sciences",
+                "Biochemistry, general",
+                "Ecology",
+                "Life Sciences, general",
+                "Cell Biology"],
+
+            'Literature': [
+                "Literature, general",
+                "Twentieth-Century Literature",
+                "Nineteenth-Century Literature",
+                "British and Irish Literature",
+                "Literary Theory"],
+
+            'Materials Science': [
+                "Characterization and Evaluation of Materials",
+                "Materials Science, general",
+                "Nanotechnology",
+                "Materials Engineering",
+                "Metallic Materials"],
+
+            'Mathematics': [
+                "Mathematics, general",
+                "Analysis",
+                "Applications of Mathematics",
+                "Algebra",
+                "Probability Theory and Stochastic Processes"],
+            'Medicine & Public Health': [
+                'Internal Medicine',
+                'Oncology',
+                'Pharmacology/ Toxicology',
+                'Medicine / Public Health, general',
+                'Drug Safety and Pharmacovigilance'],
+
+            'Pharmacy': [
+                "Pharmacy",
+                "Pharmacology/Toxicology",
+                "Organic Chemistry",
+                "Dermatology",
+                "Linguistics, general"],
+
+            'Philosophy': [
+                "Ethics",
+                "Philosophy of Science",
+                "Philosophy, general",
+                "Epistemology",
+                "Logic"],
+
+            'Physics': [
+                "Physics, general",
+                "Nuclear Physics, Heavy Ions, Hadrons",
+                "Theoretical, Mathematical and Computational Physics",
+                "Condensed Matter Physics",
+                "Astrophysics and Astroparticles"],
+
+            'Political Science and International Relations': [
+                "Political Science",
+                "International Relations",
+                "Comparative Politics",
+                "Political Theory",
+                "European Politics"],
+
+            'Psychology': [
+                "Psychology, general",
+                "Child and School Psychology",
+                "Clinical Psychology",
+                "Cognitive Psychology",
+                "Psychiatry"],
+
+            'Social Sciences': [
+                "Social Sciences, general",
+                "Sociology, general",
+                "Human Geography",
+                "Political Science",
+                "Anthropology"],
+
+            'Statistics': [
+                "Statistics, general",
+                "Statistical Theory and Methods",
+                "Statistics for Business, Management, Economics, Finance, Insurance",
+                "Probability Theory and Stochastic Processes",
+                "Statistics for Life Sciences, Medicine, Health Sciences"]
+
+        }
+        key = Object.keys(subjectObject)
+        function showContent(id) {
+            var contents = document.getElementsByClassName('content');
+            for (var i = 0; i < contents.length; i++) {
+                contents[i].style.display = 'none';
+            }
+
+            // Show the selected content
+            var selectedContent = document.getElementById(id);
+            if (selectedContent) {
+                selectedContent.style.display = 'block';
+            }
+        }
+
+    </script>
 </head>
+
 <body>
-    <h1>Registration Form</h1>
-    <form method="POST" action="/register">
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" required><br><br>
+    <div class="container">
+        <div class="title" style="text-align: center;">Registration</div>
+        <br>
+        <div class="formcontent">
+            <table>
+                <tr>
+                    <td>
+                        <form method="POST" action='/register'>
+                            <div class="user-details">
+                                <div class="input-box">
+                                    <span class="details">Full Name</span>
+                                    <input type="text" id="name" placeholder="Enter your name" name="name" required>
+                                </div>
+                                <div class="input-box">
+                                    <span class="details">Email</span>
+                                    <input type="text" id="email" placeholder="Enter your email" name="email" required>
+                                </div>
+                                <div class="input-box">
+                                    <span class="details">Domain</span>
+                                    <input type="text" id="interests" placeholder="Enter domain from below" name="interests" required>
 
-        <label for="interests">Interests:</label>
-        <input type="text" id="interests" name="interests" required><br><br>
-        <label for="interests">Email ID:</label>
-        <input type="text" id="email" name="email" required><br><br>
-        <label for="interests">Subdomain</label>
-        <input type="text" id="subdomain" name="subdomain" required><br><br>
-        
-        <input type="submit" value="Submit">
-    </form>
+                                </div>
+
+
+                                <div class="input-box">
+                                    <span class="details">Subdomain</span>
+                                    <input type="text" id="subdomain" placeholder="Enter subdomain from above" name="subdomain" required>
+                                </div>
+
+
+                                <div class="button">
+                                    <input type="submit" value="Submit">
+                                </div>
+                            </div>
+                        </form>
+                    </td>
+                    <td style="padding-left: 50px;padding-top: 20px;">
+                        <p style="margin-top: 20px;">Select Domain to view subdomain</p>
+                        <br>
+                        <label>
+                            <input type="radio" name="content" onclick="showContent('content1')"> Biomedicine
+                        </label>
+                        <label>
+                            <input type="radio" name="content" onclick="showContent('content2')"> Business and
+                            Management
+                        </label>
+                        <label>
+                            <input type="radio" name="content" onclick="showContent('content3')"> Chemistry
+                        </label>
+                        <label>
+                            <input type="radio" name="content" onclick="showContent('content4')"> Computer Science
+                        </label>
+                        <label>
+                            <input type="radio" name="content" onclick="showContent('content5')"> Earth Science
+                        </label>
+                        <label>
+                            <input type="radio" name="content" onclick="showContent('content6')">Economics
+                        </label>
+                        <label>
+                            <input type="radio" name="content" onclick="showContent('content7')"> Education
+                        </label>
+                        <label>
+                            <input type="radio" name="content" onclick="showContent('content8')"> Engineering
+                        </label>
+                        <label>
+                            <input type="radio" name="content" onclick="showContent('content9')"> Environment
+                        </label>
+                        <label>
+                            <input type="radio" name="content" onclick="showContent('content10')"> Geography
+                        </label>
+                        <label>
+                            <input type="radio" name="content" onclick="showContent('content11')"> History
+                        </label>
+                        <label>
+                            <input type="radio" name="content" onclick="showContent('content12')"> Law
+                        </label>
+                        <label>
+                            <input type="radio" name="content" onclick="showContent('content13')"> Life Sciences
+                        </label>
+                        <label>
+                            <input type="radio" name="content" onclick="showContent('content14')"> Literature
+                        </label>
+                        <label>
+                            <input type="radio" name="content" onclick="showContent('content15')"> Material Science
+                        </label>
+                        <label>
+                            <input type="radio" name="content" onclick="showContent('content16')"> Mathematics
+                        </label>
+                        <label>
+                            <input type="radio" name="content" onclick="showContent('content17')"> Medicine & Public
+                            Health
+                        </label>
+                        <label>
+                            <input type="radio" name="content" onclick="showContent('content18')"> Pharmacy
+                        </label>
+                        <label>
+                            <input type="radio" name="content" onclick="showContent('content19')"> Philosophy
+                        </label>
+                        <label>
+                            <input type="radio" name="content" onclick="showContent('content20')"> Physics
+                        </label>
+                        <label>
+                            <input type="radio" name="content" onclick="showContent('content21')"> Political Science and
+                            International
+                            Relations
+                        </label>
+                        <label>
+                            <input type="radio" name="content" onclick="showContent('content22')">Psychology
+                        </label>
+                        <label>
+                            <input type="radio" name="content" onclick="showContent('content23')"> Social Sciences
+                        </label>
+                        <input type="radio" name="content" onclick="showContent('content24')"> Statistics
+                        </label>
+
+                        <div id="content1" class="content">
+                            <br>
+                            <ul style="align-self: center;">
+                                <li>Neurosciences</li>
+                                <li>Pharmacology/Toxicology</li>
+                                <li>Molecular Medicine</li>
+                                <li>Biomedicine, general</li>
+                                <li>Cell Biology</li>
+                            </ul>
+                        </div>
+
+                        <div id="content2" class="content">
+                            <br>
+                            <ul>
+                                <li>Business and Management, general</li>
+                                <li>Management</li>
+                                <li>Business Strategy/Leadership</li>
+                                <li>Operations Research/Decision Theory</li>
+                                <li>Marketing</li>
+                            </ul>
+                        </div>
+                        <div id="content3" class="content">
+                            <br>
+                            <ul>
+                                <li> Physical Chemistry</li>
+                                <li>Analytical Chemistry</li>
+                                <li>Food Science</li>
+                                <li>Inorganic Chemistry</li>
+                                <li>Organic Chemistry</li>
+                            </ul>
+                        </div>
+                        <div id="content4" class="content">
+                            <br>
+                            <ul>
+                                <li>Artificial Intelligence</li>
+                                <li>Computer Communication Networks</li>
+                                <li>Information Systems Applications (incl. Internet)</li>
+                                <li>Information Storage and Retrieval</li>
+                                <li>Algorithm Analysis and Problem Complexity</li>
+                            </ul>
+                        </div>
+                        <div id="content5" class="content">
+                            <br>
+                            <ul>
+                                <li>Geology</li>
+                                <li>Geotechnical Engineering & Applied Earth Sciences</li>
+                                <li>Hydrogeology</li>
+                                <li>Geoengineering, Foundations, Hydraulics</li>
+                                <li>Soil Science & Conservation</li>
+                            </ul>
+                        </div>
+                        <div id="content6" class="content">
+                            <br>
+                            <ul>
+                                <li>Economic Policy</li>
+                                <li>Economic Theory/Quantitative Economics/Mathematical Methods</li>
+                                <li>Economics, general</li>
+                                <li>Public Economics</li>
+                                <li>Macroeconomics/Monetary Economics//Financial Economics</li>
+                            </ul>
+                        </div>
+                        <div id="content7" class="content">
+                            <br>
+                            <ul>
+                                <li>Education, general</li>
+                                <li>Educational Policy and Politics</li>
+                                <li>Higher Education</li>
+                                <li>International and Comparative Education</li>
+                                <li>Sociology of Education</li>
+                            </ul>
+                        </div>
+                        <div id="content8" class="content">
+                            <br>
+                            <ul>
+                                <li>Computational Intelligence</li>
+                                <li>Artificial Intelligence</li>
+                                <li>Engineering, general</li>
+                                <li>Mechanical Engineering</li>
+                                <li>Communications Engineering, Networks</li>
+                            </ul>
+                        </div>
+                        <div id="content9" class="content">
+                            <br>
+                            <ul>
+                                <li>Environment, general</li>
+                                <li>Ecotoxicology</li>
+                                <li>Atmospheric Protection/Air Quality Control/Air Pollution</li>
+                                <li>Environmental Health</li>
+                                <li>Waste Water Technology / Water Pollution Control / Water Management / Aquatic
+                                    Pollution</li>
+                            </ul>
+                        </div>
+                        <div id="content10" class="content">
+                            <br>
+                            <ul>
+                                <li>Landscape/Regional and Urban Planning</li>
+                                <li>Nature Conservation</li>
+                                <li>Landscape Architecture</li>
+                                <li>Civil Engineering</li>
+                                <li>Geographical Information Systems/Cartography</li>
+                            </ul>
+                        </div>
+                        <div id="content11" class="content">
+                            <br>
+                            <ul>
+                                <li>History, general</li>
+                                <li>Modern History</li>
+                                <li>Social History</li>
+                                <li>Archaeology</li>
+                                <li>Cultural History</li>
+                            </ul>
+                        </div>
+                        <div id="content12" class="content">
+                            <br>
+                            <ul>
+                                <li>Private International Law</li>
+                                <li>International & Foreign Law</li>
+                                <li> Comparative Law </li>
+                                <li>Civil Law</li>
+                                <li>Medical Law</li>
+                                <li>heories of Law, Philosophy of Law, Legal History</li>
+                                <li>Commercial Law</li>
+                            </ul>
+                        </div>
+                        <div id="content13" class="content">
+                            <br>
+                            <ul>
+                                <li>Chemistry</li>
+                                <li>Plant Sciences</li>
+                                <li>Biochemistry, general</li>
+                                <li>Ecology</li>
+                                <li>Life Sciences, general</li>
+                                <li>Cell Biology</li>
+                            </ul>
+                        </div>
+                        <div id="content14" class="content">
+                            <br>
+                            <ul>
+                                <li>Literature, general</li>
+                                <li>Twentieth-Century Literature</li>
+                                <li>Nineteenth-Century Literature</li>
+                                <li>British and Irish Literature</li>
+                                <li>Literary Theory</li>
+                            </ul>
+                        </div>
+
+                        <div id="content15" class="content">
+                            <br>
+                            <ul>
+                                <li>Characterization and Evaluation of Materials</li>
+                                <li>Materials Science, general</li>
+                                <li>Nanotechnology</li>
+                                <li>Materials Engineering</li>
+                                <li>Metallic Materials</li>
+                            </ul>
+                        </div>
+                        <div id="content16" class="content">
+                            <br>
+                            <ul>
+                                <li> Mathematics, general</li>
+                                <li>Analysis</li>
+                                <li>Applications of Mathematics</li>
+                                <li>Algebra</li>
+                                <li>Probability Theory and Stochastic Processes</li>
+                            </ul>
+                        </div>
+                        <div id="content17" class="content">
+                            <br>
+                            <ul>
+                                <li>Internal Medicine</li>
+                                <li>Oncology</li>
+                                <li>Pharmacology/ Toxicology</li>
+                                <li>Medicine / Public Health, general</li>
+                                <li>Drug Safety and Pharmacovigilance</li>
+                            </ul>
+                        </div>
+                        <div id="content18" class="content">
+                            <br>
+                            <ul>
+                                <li>Pharmacy</li>
+                                <li>Pharmacology/Toxicology</li>
+                                <li>Organic Chemistry</li>
+                                <li>Dermatology</li>
+                                <li>Linguistics, general</li>
+                            </ul>
+                        </div>
+                        <div id="content19" class="content">
+                            <br>
+                            <ul>
+                                <li>Ethics</li>
+                                <li>Philosophy of Science</li>
+                                <li>Philosophy, general</li>
+                                <li>Epistemology</li>
+                                <li>Logic</li>
+                            </ul>
+                        </div>
+                        <div id="content20" class="content">
+                            <br>
+                            <ul>
+                                <li>Physics, general</li>
+                                <li>Nuclear Physics, Heavy Ions, Hadrons</li>
+                                <li>Theoretical, Mathematical and Computational Physics</li>
+                                <li>Condensed Matter Physics</li>
+                                <li>Astrophysics and Astroparticles</li>
+                            </ul>
+                        </div>
+                        <div id="content21" class="content">
+                            <br>
+                            <ul>
+                                <li>Political Science</li>
+                                <li>International Relations</li>
+                                <li>Comparative Politics</li>
+                                <li>Political Theory</li>
+                                <li>European Politics</li>
+                            </ul>
+                        </div>
+                        <div id="content22" class="content">
+                            <br>
+                            <ul>
+                                <li>Psychology, general</li>
+                                <li>Child and School Psychology</li>
+                                <li>Clinical Psychology</li>
+                                <li>Cognitive Psychology</li>
+                                <li>Psychiatry</li>
+                            </ul>
+                        </div>
+                        <div id="content23" class="content">
+                            <br>
+                            <ul>
+                                <li>Social Sciences, general</li>
+                                <li>Sociology, general</li>
+                                <li>Human Geography</li>
+                                <li>Political Science</li>
+                                <li>Anthropology</li>
+                            </ul>
+                        </div>
+                        <div id="content24" class="content">
+                            <br>
+                            <ul>
+                                <li>Statistics, general</li>
+                                <li>Statistical Theory and Methods</li>
+                                <li>Statistics for Business, Management, Economics, Finance, Insurance</li>
+                                <li>Probability Theory and Stochastic Processes</li>
+                                <li>Statistics for Life Sciences, Medicine, Health Sciences</li>
+                            </ul>
+                        </div>
+
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <p>
+
+        </p>
+    </div>
+
 </body>
-</html>
 
+</html>
