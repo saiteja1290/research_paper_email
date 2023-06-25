@@ -15,3 +15,6 @@ Create a .env file containing the username and password of your outlook mail (we
 To gain the added functionality of using openai, insert your openai.api_key in any.py and comment out the respective code in comments
 
 Run app.py, copy the server link and paste it on your browser.
+
+After registering is done, run any.py to get the output i.e a mail containing the research papers based on the interests.
+
