@@ -142,25 +142,35 @@ def get_row_data(excel_file, sheet_name, row):
         row_data.append(cell.value)
 
     return row_data
-
-# Example usage
 excel_file = 'registrations.xlsx'
 sheet_name = 'Sheet'
 row = 2
-for i in range(get_number_of_rows(excel_file, sheet_name)-1):
+def mainmain():
+    for i in range(get_number_of_rows(excel_file, sheet_name)-1):
 
-    row_data = get_row_data(excel_file, sheet_name, row)
-    domain = row_data[1]
-    subdomain = row_data[3]
-    name = row_data[0]
-    email = row_data[2]
-    row += 1
-    data = link_to_pdfs_and_titles(domain, subdomain, name)
-    # print(data)
-    # data = read_text_file(f'text_files/{name}.txt')
-    send_email(
-        subject="Your Weekly Research Paper recommendation",
-        name=f"{name}",
-        receiver_email=f"{email}",
-        datas= data,
-    )
+        row_data = get_row_data(excel_file, sheet_name, row)
+        domain = row_data[1]
+        subdomain = row_data[3]
+        name = row_data[0]
+        email = row_data[2]
+        row += 1
+        data = link_to_pdfs_and_titles(domain, subdomain, name)
+        # print(data)
+        # data = read_text_file(f'text_files/{name}.txt')
+        send_email(
+            subject="Your Weekly Research Paper recommendation",
+            name=f"{name}",
+            receiver_email=f"{email}",
+            datas= data,
+        )
+# Example usage
+
+week_seconds = 604800
+mainmain()
+
+# Uncomment this code and comment mainmain() in line 169 to send mails every week
+# while True:
+#     mainmain()
+#     time.sleep(week_seconds)
+
+
