@@ -1,12 +1,509 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html>
 <head>
     <title>Home Page</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 
 </head>
+<style></style>
 <body>
     <h1>Welcome to the Home Page</h1>
     <a href="{{ url_for('register') }}"><button>Register</button></a>
 </body>
+</html> -->
+<!-- 88% of storage used … You can clean up space or get more storage for Drive, Gmail, and Google Photos. -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <script src="script.js"></script>
+    <title>Document</title>
+</head>
+<style>
+    /* 88% of storage used … You can clean up space or get more storage for Drive, Gmail, and Google Photos. */
+.main-container.flex,
+body {
+    -webkit-box-direction: normal;
+}
+
+html {
+    font-family: sans-serif;
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    min-height: 100%;
+    background-color: #022933;
+}
+
+footer,
+header,
+main,
+menu,
+nav,
+section {
+    display: block;
+}
+
+.navigation-button.b-black {
+    transition: background-color 0.3s ease-out;
+}
+
+body,
+h2,
+h3 {
+    color: #0a100a;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+}
+
+label,
+p {
+    color: #767676;
+}
+
+body {
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    font-size: 16px;
+    line-height: 28px;
+    font-weight: 400;
+    background-color: #022933;
+}
+
+p {
+    font-size: 16px;
+    margin-bottom: 0;
+}
+
+p {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+    line-height: 26px;
+    font-weight: 300;
+}
+
+a {
+    color: #972628;
+    text-decoration: none;
+}
+
+label {
+    display: block;
+    margin-bottom: 0;
+    font-size: 12px;
+    line-height: 20px;
+    font-weight: 600;
+    letter-spacing: 1.2px;
+}
+
+.hero-heading {
+    margin-top: 0;
+    margin-bottom: 30px;
+    font-family: "Playfair Display", sans-serif;
+    color: #0a100a;
+    font-size: 7.2vh;
+    line-height: 1.25em;
+    font-weight: 600;
+    letter-spacing: -2.8px;
+}
+
+.authentication-message {
+    display: block;
+    margin-bottom: 40px;
+    padding-right: 150px;
+    padding-left: 150px;
+    color: #f0dbdb;
+    font-size: 20px;
+    line-height: 34px;
+    font-weight: 300;
+    text-align: center;
+    padding-top: 40px;
+}
+
+.hero-section {
+    display: flex;
+    min-height: 100vh;
+    background-image: url('../static/images/image.jpg'), -webkit-gradient(linear, left top, left bottom, from(#f8f4f1), to(#f8f4f1));
+    background-image: url('../static/images/image.jpg'), linear-gradient(180deg, #f8f4f1, #f8f4f1);
+    background-position: 50% 50%, 0 0;
+    background-size: cover, auto;
+    background-repeat: no-repeat, repeat;
+    background-color: #022933;
+}
+
+.navigation-static,
+.navigation-sticky {
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: auto;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    height: 115px;
+    padding-right: 30px;
+    padding-left: 30px;
+}
+
+.navigation-static {
+    position: absolute;
+    z-index: 1000;
+    display: flex;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+.navigation-sticky {
+    position: fixed;
+    z-index: 900;
+    display: flex;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    background-color: #081e36;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.05);
+    -webkit-transform: translate(0, -116px);
+    -ms-transform: translate(0, -116px);
+    transform: translate(0, -116px);
+}
+
+.hero-container {
+    position: relative;
+    top: -10vh;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    max-width: 60vh;
+    margin-right: auto;
+    margin-left: 10%;
+    -webkit-align-self: center;
+    -ms-flex-item-align: center;
+    align-self: center;
+}
+
+.break {
+    display: block;
+}
+
+.hero-text {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    margin-right: 16%;
+    font-size: 22px;
+    line-height: 36px;
+    font-weight: 300;
+}
+
+.hero-message {
+    max-width: 80%;
+    padding-right: 20px;
+    padding-left: 20px;
+}
+
+
+.hero-container {
+    top: -50px;
+    max-width: 90%;
+    margin-right: 5%;
+    margin-left: 5%;
+}
+
+.hero-text {
+    margin-right: 15%;
+    font-size: 18px;
+    line-height: 30px;
+}
+
+
+.hero-message {
+    max-width: 60%;
+}
+
+
+.hero-container {
+    top: 30px;
+    margin-right: 4%;
+    margin-left: 4%;
+}
+
+.hero-text {
+    margin-right: 50px;
+    font-size: 40px;
+    line-height: 26px;
+}
+
+
+.hero-message {
+    max-width: none;
+    padding-right: 0;
+}
+
+
+.hero-container {
+    top: auto;
+    margin-right: 22px;
+    margin-left: 22px;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+}
+
+.hero-text {
+    margin-right: 0;
+}
+
+
+.btn {
+    font-size: 1.2rem;
+    padding: 1rem 2.5rem;
+    border: none;
+    outline: none;
+    border-radius: 0.4rem;
+    cursor: pointer;
+    text-transform: uppercase;
+    background-color: rgb(2, 72, 85);
+    color: rgb(234, 234, 234);
+    font-weight: 700;
+    transition: 0.6s;
+    box-shadow: 0px 0px 60px #1f4c65;
+    -webkit-box-reflect: below 10px linear-gradient(to bottom, rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.4));
+}
+
+.btn:active {
+    scale: 0.92;
+}
+
+.btn:hover {
+    background: rgb(2, 29, 78);
+    background: linear-gradient(270deg, rgba(2, 29, 78, 0.681) 0%, rgba(31, 215, 232, 0.873) 60%);
+    color: rgb(4, 4, 38);
+}
+
+.row {
+    margin-left: 30px;
+}
+
+.column {
+    float: left;
+    width: 305px;
+    padding: 1px;
+
+}
+
+.row::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+.banan {
+    height: 550px;
+    width: 305px;
+}
+
+.banan img {
+    width: 100%;
+    display: block;
+    transition: transform 1s;
+}
+
+.banan:hover img {
+    transform: scale(1.1);
+}
+
+button {
+    padding: 17px 40px;
+    border-radius: 50px;
+    border: 0;
+    background-color: #1b7895;
+    box-shadow: rgba(0, 0, 0, 0.05) 0 0 8px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-size: 15px;
+    transition: all .5s ease;
+    margin-right: 50px;
+    color: white;
+}
+
+button:hover {
+    letter-spacing: 3px;
+    background-color: #1b7895;
+    color: hsl(0, 0%, 100%);
+    box-shadow: #1b7895 0px 7px 29px 0px;
+}
+
+button:active {
+    letter-spacing: 3px;
+    background-color: #1b7895;
+    color: hsl(0, 0%, 100%);
+    box-shadow: #1b7895 0px 0px 0px 0px;
+    transform: translateY(10px);
+    transition: 100ms;
+}
+</style>
+<body>
+
+    <nav class="navigation">
+        <div class="navigation-static">
+            <a href="/" aria-current="page" class="logo w-inline-block w--current">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="" class="navigation-logo" />
+            </a>
+            <a href="{{ url_for('register') }}"><button class="button">Register</button></a>
+        </div>
+        <div class="navigation-sticky">
+            <a href="/" aria-current="page" class="logo w-inline-block w--current">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="" class="navigation-logo" />
+
+            </a>
+        </div>
+    </nav>
+    <section class="hero-section">
+        <div class="hero-container">
+            <div class="mobile-image"></div>
+            <div class="hero-message">
+                <div class="hero-text">Your Getaway to<br><br>Cutting-edge Research</div>
+                <br>
+                <br>
+                <button class="btn">Get Started For Free</button>
+            </div>
+        </div>
+    </section>
+    <section class="section">
+        <div class="main-container flex">
+            <div class="authetication-section">
+                <p class="authentication-message">
+                    Get personalised research paper recommendations delivered to your inbox weekly
+                    <br>
+                    Don't miss out on the latest advancements in your field of interest.
+                </p>
+            </div>
+        </div>
+    </section>
+    <h1 style="color: white;text-align: center;">TOPICS</h1>
+    <div class="row">
+        <div class="column">
+            <div class="banan">
+                <a> <img src="{{ url_for('static', filename='images/bm.png') }}" height="550px" width="250px"> </a>
+            </div>
+        </div>
+        <div class="column">
+            <div class="banan">
+                <a> <img src="{{ url_for('static', filename='images/cs.png') }}" height="550px" width="250px"> </a>
+            </div>
+        </div>
+        <div class="column">
+            <div class="banan">
+                <a> <img src="{{ url_for('static', filename='images/edu.png') }}" height="550px" width="250px"> </a>
+            </div>
+        </div>
+        <div class="column">
+            <div class="banan">
+                <a> <img src="{{ url_for('static', filename='images/es.png') }}" height="550px" width="250px"> </a>
+            </div>
+        </div>
+
+        <div class="column">
+            <div class="banan">
+                <a> <img src="{{ url_for('static', filename='images/lit.png') }}" height="550px" width="250px"> </a>
+            </div>
+        </div>
+        <div class="column">
+            <div class="banan">
+                <a> <img src="{{ url_for('static', filename='images/geo.png') }}" height="550px" width="250px"> </a>
+            </div>
+        </div>
+        <div class="column">
+            <div class="banan">
+                <a> <img src="{{ url_for('static', filename='images/psych.png') }}" height="550px" width="250px"> </a>
+            </div>
+        </div>
+        <div class="column">
+            <div class="banan">
+                <a> <img src="{{ url_for('static', filename='images/law.png') }}" height="550px" width="250px"> </a>
+            </div>
+        </div>
+        <br>
+        <div class="column">
+            <div class="banan">
+                <a> <img src="{{ url_for('static', filename='images/chem.png') }}" height="550px" width="250px"> </a>
+            </div>
+        </div>
+        <div class="column">
+            <div class="banan">
+                <a> <img src="{{ url_for('static', filename='images/math.png') }}" height="550px" width="250px"> </a>
+            </div>
+        </div>
+        <div class="column">
+            <div class="banan">
+                <a> <img src="{{ url_for('static', filename='images/hist.png') }}" height="550px" width="250px"> </a>
+            </div>
+        </div>
+        <div class="column">
+            <div class="banan">
+                <a> <img src="{{ url_for('static', filename='images/other.png') }}" height="550px" width="250px"> </a>
+            </div>
+        </div>
+    </div>
+</body>
+</body>
+<script>
+    $(function () {
+    $('.carousel-item').eq(0).addClass('active');
+    var total = $('.carousel-item').length;
+    var current = 0;
+    $('#moveRight').on('click', function () {
+        var next = current;
+        current = current + 1;
+        setSlide(next, current);
+    });
+    $('#moveLeft').on('click', function () {
+        var prev = current;
+        current = current - 1;
+        setSlide(prev, current);
+    });
+    function setSlide(prev, next) {
+        var slide = current;
+        if (next > total - 1) {
+            slide = 0;
+            current = 0;
+        }
+        if (next < 0) {
+            slide = total - 1;
+            current = total - 1;
+        }
+        $('.carousel-item').eq(prev).removeClass('active');
+        $('.carousel-item').eq(slide).addClass('active');
+        setTimeout(function () {
+
+        }, 800);
+
+
+
+        console.log('current ' + current);
+        console.log('prev ' + prev);
+    }
+});
+</script>
+
 </html>
